@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+<STYLE TYPE="text/css">
+body
+{
+    overflow:auto;
+    font-family:lucida grande,tahoma,verdana,arial,sans-serif;
+    color:#434343;
+}
+
+div.tutorial
+{
+    font-size:12pt;
+    line-height:18pt;   
+}
+
+div.spacer
+{
+    height:18pt;
+}
+
+span.tutorial_title
+{
+    font-size:16pt;
+    font-weight:bold;
+    color:#349CD8;
+}
+
+pre
+{
+    font-size:10pt;
+    margin:2px;
+    padding:8px;
+    background-color:#FBFBFB;
+
+    border-radius:8px; 
+    -moz-border-radius:8px; 
+    -webkit-border-radius:8px;
+}
+
+a{ text-decoration:none; }
+a:active { color:blue; }
+a:hover { color:green; }
+a:link { color:blue; }
+a:visited { color:blue; }
+
+td.cmd_label
+{
+    font-style:italic ;
+}
+</STYLE>
+<BODY>
+<div ID="intro" CLASS="tutorial">
+<SPAN CLASS="tutorial_title"><SPAN STYLE="color:#FF2323">DemoN</SPAN> - Getting started</SPAN><br>
+DemoN is a freeware Javascript object for running demo versions of your web-pages.<br>
+You can download the whole package from <A HREF="../repo/demo_n.zip">here</A><br><br>
+Implementation is very easy and you've just to learn the dictionary of commands at the bottom and run your demos.<br><br>
+Just to have a bare idea, we can start by thinking demos as some sort of movies, that is, as sequences of frames, one after one.<br><br>
+In more abstract terms, frames are turned into objects performing something. We'll call'em &lsquo;actions&rsquo; here.<br>
+Anyway, unlike movies - where frames are played at a constant time-rate, DemoN allows to set up a time interval for each action,
+independently from each other.<br><br>
+But here Practice is more important than Theory here, so let's see some code now ...
+</div>
+
+<div CLASS="spacer"></div>
+
+<div ID="basic" CLASS="tutorial">
+<SPAN CLASS="tutorial_title">DemoN - basic components</SPAN><br>
+<pre STYLE="background-color:#F0F2FB;">
+&lt;link rel="stylesheet" type="text/css" href="demo_n.css"&gt;
+&lt;SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="a-link-to-jquery-lib"&gt;&lt;/SCRIPT&gt;
+&lt;SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="demo_n.js"&gt;&lt;/SCRIPT&gt;
+</pre>
+DemoN implements Jquery and it also needs a style-sheet files for rendering graphic features.<br>
+The samples code you'll find inside this package implements version 1.8.3 of Jquery.
+</div>
+
+<div CLASS="spacer"></div>
+
+<div ID="tuto#1" CLASS="tutorial">
+<SPAN CLASS="tutorial_title">DemoN - implementation</SPAN><br>
+<pre STYLE="background-color:#F0F2FB;">
+var _demon = new demo_n(true); // true/false to run in developer's mode or not
+    _demon.add( { action : "start" } );
+    
+    /* here you'll add the actions */
+    
+    _demon.add( { action : "end" } );
+    _demon.run();
+</pre>
+Basically, we've just instantiated the object, but it's important to understand how DemoN works:
+<ul>
+<li>Instantiate the object ;</li>
+<li>Add the actions in sequence ;</li>
+<li>Run the demo ;</li>
+</ul>
+All of the examples inside this tutorial, will include the above code.
+</div>
+
+<div CLASS="spacer"></div>
+
+<div ID="tuto#2" CLASS="tutorial">
+<SPAN CLASS="tutorial_title">Safe input warning</SPAN><br>
+Except for actions 'start' and 'end', the input JSON most often includes the
+following properties for the action to be properly registered:<br>
+<table>
+<tr><th>Field</th><td WIDTH="10"></td><th>Datatype</th><td WIDTH="10"></th><th>Description</th><td WIDTH="10"></th><th>Input</th></tr>
+<tr><td><i>ctrl_id</i></td><td WIDTH="10"></td><td>string</td><td WIDTH="10"></td><td>the control identifier (html ID attribute)</td><td WIDTH="10"></td><td>facultative/mandatory (depending on the selected action)</td></tr>
+<tr><td><i>time</i></td><td WIDTH="10"></td><td>float number</td><td WIDTH="10"></td><td>strictly positive (> 0)</td><td WIDTH="10"></td><td>mandatory</td></tr>
+<tr><td><i>time_unit</i></td><td WIDTH="10"></td><td>string</td><td WIDTH="10"></td><td>possible values "m" (minutes), "s" (seconds), "ms" (milliseconds)</td><td WIDTH="10"></td><td>mandatory</td></tr>
+<tr><td><i>action</i></td><td WIDTH="10"></td><td>string</td><td WIDTH="10"></td><td>(refer to the dictionary below)</td><td WIDTH="10"></td><td>mandatory</td></tr>
+</table>
+</div>
+
+<div CLASS="spacer"></div>
+
+<div ID="tuto#3" CLASS="tutorial">
+<SPAN CLASS="tutorial_title">DemoN - Understanding the add-action operation</SPAN><br>
+The <i>add</i> method accepts one only JSON object argument, including all the action properties.<br>
+Let's see'em all below:<br>
+
+<table>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">action</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">It instructs DemoN about what to do at each step of the sequence<br>
+    See the dictionary below for the full list with explanations.</td>
+    <td WIDTH="12"></td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">ctrl_id</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">This is the HTML control identifier: the target of the action</td>
+    <td WIDTH="12"></td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">showlabel</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">boolean value (true/false) to activate the visibility of the description label</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">desclabel</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">the text of the description label, optionally activated through the <i>showlabel</i> property</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">post_fn</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">an anonymous function running after the action takes place</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">pre_fn</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">an anonymous running before the action takes place</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">time</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">value indicating how long the action duration time</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">time_unit</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">the time unit related to the <i>time</i> property.<br>
+    Possible values are:
+    <table>
+    <tr><td STYLE="color:blue;">ms</td><td WIDTH="6"></td><td>milli-seconds</td></tr>
+    <tr><td STYLE="color:blue;">m</td><td WIDTH="6"></td><td>minutes</td></tr>
+    <tr><td STYLE="color:blue;">s</td><td WIDTH="6"></td><td>seconds</td></tr>
+    </table>
+    </td>
+</tr>
+</table>
+
+</div>
+
+
+<div CLASS="spacer"></div>
+
+<div ID="dictionary" CLASS="tutorial">
+<SPAN CLASS="tutorial_title">DemoN - dictionary of commands</SPAN><br>
+<table>
+<tr>
+    <th>Command</th>
+    <td WIDTH="12"></td>
+    <th>Description</th>
+    <td WIDTH="12"></td>
+    <th>Category</th>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">blur</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">remove the focus from the control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">general controls</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">change</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event 'change' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">general controls</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">clean</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">clean the current control contents</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">general controls</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">click</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event (mouse left button) 'click' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">mouse events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label"VALIGN="top">dblclick</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event (mouse left button) 'double click' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">mouse events</td>
+</tr>
+
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">end</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">close all components functionalities</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">internal management</td>
+</tr>
+
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">fadein</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">Fade in the selected DIV</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">DIV events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">fadeout</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">Fade out the selected DIV</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">DIV events</td>
+</tr>
+
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">focus</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">set the focus to the control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">general controls</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">hide</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">hide the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">general controls</td>
+</tr>
+
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">keydel</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">simulates keyboard pressure to delete the last character from the text inside the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">keyboard events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">keypress</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">simulates keyboard pressure to add one more character to the text inside the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">keyboard events</td>
+</tr>
+
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">mousedown</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event 'mousedown' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">mouse events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">mouseenter</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event 'mouseenter' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">mouse events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">mousemove</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event 'mousemove' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">mouse events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">mouseover</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event 'mouseover' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">mouse events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">mouseout</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event 'mouseout' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">mouse events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">mouseup</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">trigger the event 'mouseup' to the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">mouse events</td>
+</tr>
+
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">move</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">Move the selected DIV to specific position over the viewport.<br>
+    Position can be input by a couple of coordinates:
+    <pre>set_value : { to_x : 580, to_y : 210 }</pre>
+    or via pre-defined values:
+    <pre>set_value : { to_x : 'center', to_y : 'center' }</pre>
+    moving the div object (applies to div only) to the center of the screen.<br>
+    X-coords predefined values : 'left', 'center', 'right'<br>
+    Y-coords predefined values : 'top', 'center', 'bottom'<br>
+    </td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">DIV events</td>
+</tr>
+<tr><td HEIGHT="12"></td></tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">nothing</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">does not perform any visible operation onto the screen<br>and it may be helpful to arrange <i>pre_fn</i> or <i>post_fn</i> functionalities</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">general controls</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">scroll</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">Scroll the contents of the selected DIV</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">DIV events</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">select</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">Select the dropdown control (combo box)</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">general controls</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">show</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">Show the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">general controls</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">start</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">arrange all the starting settings for DemoN to work with actions</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">internal management</td>
+</tr>
+<tr>
+    <td CLASS="cmd_label" VALIGN="top">toggle</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">toggles visibility of the selected control</td>
+    <td WIDTH="12"></td>
+    <td VALIGN="top">DIV events</td>
+</tr>
+
+</table>
+</div>
+
+
+<div CLASS="spacer"></div>
+
+<div ID="examples" CLASS="tutorial">
+<SPAN CLASS="tutorial_title">DemoN - Examples</SPAN><br>
+Click on a sample to see code and run it
+<ol>
+<li><A TARGET="_blank" HREF="examples/example1.html">clicking on some controls</li>
+<li><A TARGET="_blank" HREF="examples/example2.html">simulating human typing</li>
+<li><A TARGET="_blank" HREF="examples/example3.html">pre-functions and post-functions</li>
+<li><A TARGET="_blank" HREF="examples/example4.html">running in the families</li>
+<li><A TARGET="_blank" HREF="examples/example5.html">fading images</li>
+<li><A TARGET="_blank" HREF="examples/example6.html">working on some controls again</li>
+</ol>
+</div>
+
+</BODY>
+</HTML>
