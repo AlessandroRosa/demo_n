@@ -1,0 +1,207 @@
+<HTML>
+<HEAD>
+<TITLE>Example 6</TITLE>
+<link rel="stylesheet" type="text/css" href="../demo_n.css">
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="http://code.jquery.com/jquery-latest.min.js"></SCRIPT>
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="../demo_n.js"></SCRIPT>
+<STYLE TYPE="text/css">
+body
+{
+    margin:0px;
+    padding:0px;
+    font-family:lucida grande,tahoma,verdana,arial,sans-serif;
+}
+
+div
+{
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+}
+
+input[type=button]
+{
+    font-size:12pt;
+    padding:6px;
+
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+}
+
+pre
+{
+    font-size:10pt;
+    margin:2px;
+    padding:8px;
+    background-color:#FBFBFB;
+
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+
+    overflow:auto;
+    white-space: pre-wrap;
+    height:70%;
+}
+</STYLE>
+</HEAD>
+<BODY>
+<DIV ID="label_div"
+     STYLE="position:relative;font-size:24pt;color:white;padding:4px;text-align:center;
+            float:left;width:10%;height:40px;color:#EE0000;color:background-white;margin:1px;">
+     Demo-N</DIV>
+<DIV ID="top_div"
+     STYLE="position:relative;font-size:24pt;color:white;padding:4px;
+            float:right;width:88%;height:40px;background-color:#C1DDF2;margin:1px;">
+     Example 6: working on some controls again</DIV>
+<DIV ID="left_div"
+     STYLE="position:relative;float:left;width:70%;height:100%;background-color:#F0F0F0;">
+<pre>
+var _demon = new demo_n(true);
+    _demon.add( { action : "start" } );
+
+    _demon.add( { ctrl_id : "myselect", time : 2, time_unit : "s",
+                  action : "focus", set_value : -1, showlabel : true, desclabel : "I'm pointing to the dropdown menù" } );
+    _demon.add( { ctrl_id : "myselect", time : 2, time_unit : "s",
+                  action : "select", set_value : 1, showlabel : true, desclabel : "I selected entry 1 by value property" } );
+
+    _demon.add( { ctrl_id : "myselect2", time : 2, time_unit : "s",
+                  action : "click", showlabel : true, desclabel : "I'm pointing to another dropdown menù" } );
+    _demon.add( { ctrl_id : "myselect2", time : 2, time_unit : "s",
+                  action : "select", set_text : "yeah", showlabel : true, desclabel : "I selected entry 'yeah' by text property" } );
+
+    _demon.add( { ctrl_id : "myeditbox", time : 2, time_unit : "s",
+                  action : "focus", set_value : "", showlabel : true, desclabel : "Focus on input text box" } );
+
+    var _str = "friendship" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "myeditbox", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], showlabel : true, desclabel : "Writing down" } );
+
+    _demon.add( { ctrl_id : "myeditbox", time : 1, time_unit : "s",
+                  action : "nothing", set_value : "", showlabel : true, desclabel : "Writing down" } );
+
+    _demon.add( { ctrl_id : "myeditbox", time : 2, time_unit : "s",
+                  action : "blur", set_value : "", showlabel : true, desclabel : "Blur from this input text box" } );
+
+    var _str = "First row" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "firstrow", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], highlight : true, desc_label : "Writing into table cells" } );
+        _str = "2nd row" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "secondrow", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], highlight : true, desc_label : "Writing into table cells" } );
+        _str = "3rd row" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "thirdrow", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], highlight : true, desc_label : "Writing into table cells" } );
+
+    _demon.add( { ctrl_id : "headerrow", time : 0.5, time_unit : "s",
+                  action : "clean", set_value : "", highlight : true, desc_label : "Cleaning the header" } );
+        _str = "Reworking the header" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "headerrow", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], highlight : true, desc_label : "Writing into table cells" } );
+
+    _demon.add( { ctrl_id : "firstrow", time : 1, time_unit : "s",
+                  action : "mouseover", set_value : _str[_i], highlight : true, desc_label : "Trigger 'mouseover' event" } );
+
+    _demon.add( { action : "end" } );
+    _demon.run();
+</pre>
+<DIV STYLE="padding:6px;float:right;">
+<INPUT TYPE="button" ONCLICK="javascript:_demon.run();" VALUE="Run this demo">
+</DIV>
+<DIV STYLE="padding:6px;float:left;clear:right;background-color:#FBFBFB;margin:2px;">
+We can focus on combo boxes and select'em by value or by text, by implementing the
+property 'set_value' or 'set_text' respectively.<br>
+</DIV>
+</DIV>
+<DIV ID="right_div"
+     STYLE="position:relative;float:left;width:30%;height:100%;background-color:white;">
+    <SELECT ID="myselect">
+    <OPTION VALUE="0">0
+    <OPTION VALUE="1">1
+    <OPTION VALUE="2">2
+    <OPTION VALUE="3">3
+    </SELECT>
+    <br/><br/>
+
+    <SELECT ID="myselect2">
+    <OPTION VALUE="1">wooow
+    <OPTION VALUE="2">yeah
+    <OPTION VALUE="3">come on!
+    <OPTION VALUE="4">don't give up !
+    </SELECT>
+    <br/><br/>
+
+    <INPUT TYPE="edit" ID="myeditbox" STYLE="width:200px;">
+    <br/><br/>
+
+    <table BORDER="1">
+    <tr><th WIDTH="180" ID="headerrow">Working inside table cells</td></tr>
+    <tr><td WIDTH="180" ID="firstrow" ONMOUSEOVER="javascript:$('#'+this.id).html('Reaction to mouseover event');"></td></tr>
+    <tr><td WIDTH="180" ID="secondrow"></td></tr>
+    <tr><td WIDTH="180" ID="thirdrow"></td></tr>
+    </table>
+</DIV>
+</BODY>
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript">
+$("#left_div").height( $(document).height() - $("#top_div").height() - 64 );
+$("#right_div").height( $(window).height() - $("#top_div").height() - 4 );
+
+var _demon = new demo_n(true);
+    _demon.add( { action : "start" } );
+
+    _demon.add( { ctrl_id : "myselect", time : 2, time_unit : "s",
+                  action : "focus", set_value : -1, showlabel : true, desclabel : "I'm pointing to the dropdown menù" } );
+    _demon.add( { ctrl_id : "myselect", time : 2, time_unit : "s",
+                  action : "select", set_value : 1, showlabel : true, desclabel : "I selected entry 1 by value property" } );
+
+    _demon.add( { ctrl_id : "myselect2", time : 2, time_unit : "s",
+                  action : "click", showlabel : true, desclabel : "I'm pointing to another dropdown menù" } );
+    _demon.add( { ctrl_id : "myselect2", time : 2, time_unit : "s",
+                  action : "select", set_text : "yeah", showlabel : true, desclabel : "I selected entry 'yeah' by text property" } );
+
+    _demon.add( { ctrl_id : "myeditbox", time : 2, time_unit : "s",
+                  action : "focus", set_value : "", showlabel : true, desclabel : "Focus on input text box" } );
+
+    var _str = "friendship" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "myeditbox", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], showlabel : true, desclabel : "Writing down" } );
+
+    _demon.add( { ctrl_id : "myeditbox", time : 1, time_unit : "s",
+                  action : "nothing", set_value : "", showlabel : true, desclabel : "Writing down" } );
+
+    _demon.add( { ctrl_id : "myeditbox", time : 2, time_unit : "s",
+                  action : "blur", set_value : "", showlabel : true, desclabel : "Blur from this input text box" } );
+
+    var _str = "First row" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "firstrow", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], highlight : true, desc_label : "Writing into table cells" } );
+        _str = "2nd row" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "secondrow", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], highlight : true, desc_label : "Writing into table cells" } );
+        _str = "3rd row" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "thirdrow", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], highlight : true, desc_label : "Writing into table cells" } );
+
+    _demon.add( { ctrl_id : "headerrow", time : 0.5, time_unit : "s",
+                  action : "clean", set_value : "", highlight : true, desc_label : "Cleaning the header" } );
+        _str = "Reworking the header" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "headerrow", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], highlight : true, desc_label : "Writing into table cells" } );
+
+    _demon.add( { ctrl_id : "firstrow", time : 1, time_unit : "s",
+                  action : "mouseover", set_value : _str[_i], highlight : true, desc_label : "Trigger 'mouseover' event" } );
+
+    _demon.add( { action : "end" } );
+</SCRIPT>
+</HTML>

@@ -1,0 +1,180 @@
+<HTML>
+<HEAD>
+<TITLE>Example 3</TITLE>
+<link rel="stylesheet" type="text/css" href="../demo_n.css">
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="http://code.jquery.com/jquery-latest.min.js"></SCRIPT>
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="../demo_n.js"></SCRIPT>
+<STYLE TYPE="text/css">
+body
+{
+    margin:0px;
+    padding:0px;
+    font-family:lucida grande,tahoma,verdana,arial,sans-serif;
+}
+
+div
+{
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+}
+
+input[type=button]
+{
+    font-size:12pt;
+    padding:6px;
+
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+}
+
+pre
+{
+    font-size:10pt;
+    margin:2px;
+    padding:8px;
+    background-color:#FBFBFB;
+
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+
+    overflow:auto;
+    white-space: pre-wrap;
+}
+</STYLE>
+</HEAD>
+<BODY>
+<DIV ID="label_div"
+     STYLE="position:relative;font-size:24pt;color:white;padding:4px;text-align:center;
+            float:left;width:10%;height:40px;color:#EE0000;color:background-white;margin:1px;">
+     Demo-N</DIV>
+<DIV ID="top_div"
+     STYLE="position:relative;font-size:24pt;color:white;padding:4px;
+            float:right;width:88%;height:40px;background-color:#C1DDF2;margin:1px;">
+      Example 3: pre-functions and post-functions</DIV>
+<DIV ID="left_div"
+     STYLE="position:relative;float:left;width:98%;height:100%;background-color:#F0F0F0;">
+<pre STYLE="height:50%;overflow:auto;">
+var _demon = new demo_n(true);
+    _demon.add( { action : "start" } );
+
+    _demon.add( { pre_fn : function()
+                  {
+                     $( "<div ID=\"presentation_div\" CLASS=\"general_rounded_corners\" STYLE=\"position:absolute;z-index:5;font-size:14pt;font-family:arial;width:340px;height:100px;overflow:auto;text-align:center;\"></div>" ).appendTo("body");
+                     $( "#presentation_div" ).css( "background-color", "#8CEDC4" ) ;
+                     $( "#presentation_div" ).html( "PRESENTATION OF THE DEMO" ) ;
+                     $( "#presentation_div" ).show() ;
+                  },
+                  ctrl_id : "presentation_div", time : 4, time_unit : "s",
+                  action : "move", set_value : { to_x : "center", to_y : "center" },
+                  post_fn : function()
+                  {
+                     setTimeout( function(){ $( "#presentation_div" ).html( "POST-FUNCTION IN ACTION !<br>Put some text in<br>Put some text in<br>Put some text in<br>Put some text in<br>Put some text in<br>Put some text in<br>" ) ; }, 2000 );
+                  }
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2.5, time_unit : "s",
+                  action : "move", set_value : { to_x : "right", to_y : "top" }, showlabel : true, desclabel : "I am moving this div to (left,top)"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "scroll", set_value : { to_x : 160, to_y : 90 }, showlabel : true, desclabel : "I scrolled down this div"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "move", set_value : { to_x : 580, to_y : 210 }, showlabel : true, desclabel : "I am moving this div to number coords"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "move", set_value : { to_x : "center", to_y : "bottom" }, showlabel : true, desclabel : "I am moving this div to (center,bottom)"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "move", set_value : { to_x : "left", to_y : "bottom" }, showlabel : true, desclabel : "I am moving this div to (left,bottom)"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "move", set_value : { to_x : "center", to_y : "center" }, showlabel : true, desclabel : "I am moving this div to (center,bottom)"
+                } );
+
+    _demon.add( { ctrl_id : "presentation_div", time : 2, time_unit : "s",
+                  action : "hide", set_value : null,
+                  post_fn : function()
+                  {
+                     $( "#presentation_div" ).remove() ;
+                  }
+                } );
+
+    _demon.add( { action : "end" } );
+    _demon.run();
+</pre>
+<DIV STYLE="padding:6px;float:right;">
+<INPUT TYPE="button" ONCLICK="javascript:_demon.run();" VALUE="Run this demo">
+</DIV>
+<DIV STYLE="padding:6px;float:left;clear:right;background-color:#FBFBFB;margin:2px;">
+The <i>pre-function</i> and the <i>post-function</i> are two input properties including a function object: they run before
+and after the action takes place respectively.<br><br>
+In this example, we create a div on the fly, we move it to the center of the screen and we finally remove it from the DOM.<br>
+So we don't need objects to already belong to the DOM: we can dynamically create'em.
+</DIV>
+</DIV>
+</BODY>
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript">
+$("#left_div").height( $(document).height() - $("#top_div").height() - 64 );
+$("#right_div").height( $(window).height() - $("#top_div").height() - 4 );
+
+var _demon = new demo_n(true);
+    _demon.add( { action : "start" } );
+
+    _demon.add( { pre_fn : function()
+                  {
+                     $( "<div ID=\"presentation_div\" CLASS=\"general_rounded_corners\" STYLE=\"position:absolute;z-index:5;font-size:14pt;font-family:arial;width:340px;height:100px;overflow:auto;text-align:center;\"></div>" ).appendTo("body");
+                     $( "#presentation_div" ).css( "background-color", "#8CEDC4" ) ;
+                     $( "#presentation_div" ).html( "PRESENTATION OF THE DEMO" ) ;
+                     $( "#presentation_div" ).show() ;
+                  },
+                  ctrl_id : "presentation_div", time : 4, time_unit : "s",
+                  action : "move", set_value : { to_x : "center", to_y : "center" },
+                  post_fn : function()
+                  {
+                     setTimeout( function(){ $( "#presentation_div" ).html( "POST-FUNCTION IN ACTION !<br>Put some text in<br>Put some text in<br>Put some text in<br>Put some text in<br>Put some text in<br>Put some text in<br>" ) ; }, 2000 );
+                  }
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2.5, time_unit : "s",
+                  action : "move", set_value : { to_x : "right", to_y : "top" }, showlabel : true, desclabel : "I am moving this div to (left,top)"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "scroll", set_value : { to_x : 160, to_y : 90 }, showlabel : true, desclabel : "I scrolled down this div"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "move", set_value : { to_x : 580, to_y : 210 }, showlabel : true, desclabel : "I am moving this div to number coords"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "move", set_value : { to_x : "center", to_y : "bottom" }, showlabel : true, desclabel : "I am moving this div to (center,bottom)"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "move", set_value : { to_x : "left", to_y : "bottom" }, showlabel : true, desclabel : "I am moving this div to (left,bottom)"
+                } );
+
+    _demon.add( { ctrl_id : "#presentation_div", time : 2, time_unit : "s",
+                  action : "move", set_value : { to_x : "center", to_y : "center" }, showlabel : true, desclabel : "I am moving this div to (center,bottom)"
+                } );
+
+    _demon.add( { ctrl_id : "presentation_div", time : 2, time_unit : "s",
+                  action : "hide", set_value : null,
+                  post_fn : function()
+                  {
+                     $( "#presentation_div" ).remove() ;
+                  }
+                } );
+
+    _demon.add( { action : "end" } );
+</SCRIPT>
+</HTML>

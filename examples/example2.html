@@ -1,0 +1,130 @@
+<HTML>
+<HEAD>
+<TITLE>Example 2</TITLE>
+<link rel="stylesheet" type="text/css" href="../demo_n.css">
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="http://code.jquery.com/jquery-latest.min.js"></SCRIPT>
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="../demo_n.js"></SCRIPT>
+<STYLE TYPE="text/css">
+body
+{
+    margin:0px;
+    padding:0px;
+    font-family:lucida grande,tahoma,verdana,arial,sans-serif;
+}
+
+div
+{
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+}
+
+input[type=button]
+{
+    font-size:12pt;
+    padding:6px;
+
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+}
+
+pre
+{
+    font-size:10pt;
+    margin:2px;
+    padding:8px;
+    background-color:#FBFBFB;
+
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+
+    overflow:auto;
+    white-space: pre-wrap;
+    height:60%;
+}
+</STYLE>
+</HEAD>
+<BODY>
+<DIV ID="label_div"
+     STYLE="position:relative;font-size:24pt;color:white;padding:4px;text-align:center;
+            float:left;width:10%;height:40px;color:#EE0000;color:background-white;margin:1px;">
+     Demo-N</DIV>
+<DIV ID="top_div"
+     STYLE="position:relative;font-size:24pt;color:white;padding:4px;
+            float:right;width:88%;height:40px;background-color:#C1DDF2;margin:1px;">
+      Example 2: simulating human typing</DIV>
+<DIV ID="left_div"
+     STYLE="position:relative;float:left;width:70%;height:100%;background-color:#F0F0F0;">
+<pre>
+var _demon = new demo_n(true);
+    _demon.add( { action : "start" } );
+
+    _demon.add( { ctrl_id : "mytextarea", time : 1, time_unit : "s",
+                  action : "clean", set_value : "", showlabel : true, desclabel : "Cleaning the textarea" } );
+
+    var _str = "1st row\n2nd row\n5rd ... oooops" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "mytextarea", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], showlabel : true, desclabel : "Writing down something" } );
+
+    for( var _i = 0 ; _i < 14 ; _i++ )
+    _demon.add( { ctrl_id : "mytextarea", time : 100, time_unit : "ms",
+                  action : "keydel", set_value : _str[_i], showlabel : true, desclabel : "...ooops !" } );
+
+    var _str = "3rd row\n4th row" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "mytextarea", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], showlabel : true, desclabel : "Writing down again" } );
+
+    _demon.add( { action : "end" } );
+    _demon.run();
+</pre>
+<DIV STYLE="padding:6px;float:right;">
+<INPUT TYPE="button" ONCLICK="javascript:_demon.run();" VALUE="Run this demo">
+</DIV>
+<DIV STYLE="padding:6px;float:left;clear:right;background-color:#FBFBFB;margin:2px;">
+Here's soon why we should think in terms of movies and frames:<br>
+first we clean the textarea control, so we can run the demo multiple times, without
+appending the new text.<br>
+Then we take an input string and we add one action per each character therein.
+After the 'oooops', we delete a number a characters.<br>
+Finally we demon-type again one more string.<br><br>
+I choose a time interval of 100 milliseconds, try accelerating it to 50s or slow it down
+to 200.<br><br>
+That's all folks !
+</DIV>
+</DIV>
+<DIV ID="right_div"
+     STYLE="position:relative;float:left;width:30%;height:100%;background-color:white;">
+<TEXTAREA ID="mytextarea" STYLE="width:240px;height:80px;padding:5px;overflow:auto;"></TEXTAREA>
+</DIV>
+</BODY>
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript">
+$("#left_div").height( $(document).height() - $("#top_div").height() - 64 );
+$("#right_div").height( $(window).height() - $("#top_div").height() - 4 );
+
+var _demon = new demo_n(true);
+    _demon.add( { action : "start" } );
+
+    _demon.add( { ctrl_id : "mytextarea", time : 1, time_unit : "s",
+                  action : "clean", set_value : "", showlabel : true, desclabel : "Cleaning the textarea" } );
+
+    var _str = "1st row\n2nd row\n5rd ... oooops" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "mytextarea", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], showlabel : true, desclabel : "Writing down something" } );
+
+    for( var _i = 0 ; _i < 14 ; _i++ )
+    _demon.add( { ctrl_id : "mytextarea", time : 100, time_unit : "ms",
+                  action : "keydel", set_value : _str[_i], showlabel : true, desclabel : "...ooops !" } );
+
+    var _str = "3rd row\n4th row" ;
+    for( var _i = 0 ; _i < _str.length ; _i++ )
+    _demon.add( { ctrl_id : "mytextarea", time : 100, time_unit : "ms",
+                  action : "keypress", set_value : _str[_i], showlabel : true, desclabel : "Writing down again" } );
+
+    _demon.add( { action : "end" } );
+</SCRIPT>
+</HTML>

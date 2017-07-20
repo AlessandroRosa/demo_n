@@ -1,0 +1,150 @@
+<HTML>
+<HEAD>
+<TITLE>Example 5</TITLE>
+<link rel="stylesheet" type="text/css" href="../demo_n.css">
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="http://code.jquery.com/jquery-latest.min.js"></SCRIPT>
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript" SRC="../demo_n.js"></SCRIPT>
+<STYLE TYPE="text/css">
+body
+{
+    margin:0px;
+    padding:0px;
+    font-family:lucida grande,tahoma,verdana,arial,sans-serif;
+}
+
+div
+{
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+}
+
+input[type=button]
+{
+    font-size:12pt;
+    padding:6px;
+
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+}
+
+pre
+{
+    font-size:10pt;
+    margin:2px;
+    padding:8px;
+    background-color:#FBFBFB;
+
+    border-radius:8px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+
+    overflow:auto;
+    white-space: pre-wrap;
+    overflow:auto;
+    height:60%;
+}
+</STYLE>
+</HEAD>
+<BODY>
+<DIV ID="label_div"
+     STYLE="position:relative;font-size:24pt;color:white;padding:4px;text-align:center;
+            float:left;width:10%;height:40px;color:#EE0000;color:background-white;margin:1px;">
+     Demo-N</DIV>
+<DIV ID="top_div"
+     STYLE="position:relative;font-size:24pt;color:white;padding:4px;
+            float:right;width:88%;height:40px;background-color:#C1DDF2;margin:1px;">
+      Example 5: fading images</DIV>
+<DIV ID="left_div"
+     STYLE="position:relative;float:left;width:70%;height:100%;background-color:#F0F0F0;">
+<pre>
+var _demon = new demo_n( true );
+    _demon.add( { action : "start" } );
+
+    _demon.add( { pre_fn : function(){ $( "#test_img" ).prop( "src", "pix/pix.1.jpg" ) ; },
+                  ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "nothing", set_value : ""
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "fadein", set_value : "slow"
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2.5, time_unit : "s",
+                  action : "fadeout", set_value : "slow",
+                  post_fn : function(){ setTimeout( function() { $( "#test_img" ).prop( "src", "pix/pix.2.jpg" ) ; }, 1500 ) ; }
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "fadein", set_value : "slow"
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2.5, time_unit : "s",
+                  action : "fadeout", set_value : "slow",
+                  post_fn : function(){ setTimeout( function() { $( "#test_img" ).prop( "src", "pix/pix.3.jpg" ) ; }, 1500 ) ; }
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "fadein", set_value : "slow"
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "fadeout", set_value : "slow"
+                } );
+
+    _demon.add( { action : "end" } );
+</pre>
+<DIV STYLE="padding:6px;float:right;">
+<INPUT TYPE="button" ONCLICK="javascript:_demon.run();" VALUE="Run Demo">
+</DIV>
+<DIV STYLE="padding:6px;float:left;clear:right;background-color:#FBFBFB;margin:2px;">
+Here's some pix that we can play as a carousel.
+</DIV>
+</DIV>
+<DIV ID="right_div"
+     STYLE="position:relative;float:left;width:30%;height:100%;background-color:white;">
+<IMG ID="test_img" STYLE="display:none;">
+</DIV>
+</BODY>
+<SCRIPT LANGUAGE="javascript" TYPE="text/javascript">
+$("#left_div").height( $(document).height() - $("#top_div").height() - 64 );
+$("#right_div").height( $(window).height() - $("#top_div").height() - 4 );
+
+var _demon = new demo_n( true );
+    _demon.add( { action : "start" } );
+
+    _demon.add( { pre_fn : function(){ $( "#test_img" ).prop( "src", "pix/pix.1.jpg" ) ; },
+                  ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "nothing", set_value : ""
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "fadein", set_value : "slow"
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2.5, time_unit : "s",
+                  action : "fadeout", set_value : "slow",
+                  post_fn : function(){ setTimeout( function() { $( "#test_img" ).prop( "src", "pix/pix.2.jpg" ) ; }, 1500 ) ; }
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "fadein", set_value : "slow"
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2.5, time_unit : "s",
+                  action : "fadeout", set_value : "slow",
+                  post_fn : function(){ setTimeout( function() { $( "#test_img" ).prop( "src", "pix/pix.3.jpg" ) ; }, 1500 ) ; }
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "fadein", set_value : "slow"
+                } );
+
+    _demon.add( { ctrl_id : "test_img", time : 2, time_unit : "s",
+                  action : "fadeout", set_value : "slow"
+                } );
+
+    _demon.add( { action : "end" } );
+</SCRIPT>
+</HTML>
