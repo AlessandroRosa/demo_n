@@ -367,6 +367,8 @@ demo_n.prototype.do_it = function( _i )
        $( "#" + _entry.ctrl_id ).val( _entry.set_value ) ;
        else if ( _entry.set_text != null )
        $("#"+_entry.ctrl_id+" option:contains(" + _entry.set_text + ")").attr('selected', 'selected');
+
+       $( "#" + _entry.ctrl_id ).trigger( "change" ) ;
        break ;
        case "show":
        $( "#" + _entry.ctrl_id ).show() ;
