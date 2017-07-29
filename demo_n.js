@@ -57,6 +57,7 @@ demo_n.prototype.resume = function()
 
 demo_n.prototype.add = function( _json )
 {
+   _json.action = safe_string( _json.action, "" ).toLowerCase();
    _json.time = safe_float( _json.time, 0 ); if ( _json.time < 0 ) _json.time = 0 ;
    _json.time_unit = safe_string( _json.time_unit, "s" ).toLowerCase();
    _json.showlabel = _json.showlabel == null ? false : ( _json.showlabel ? true : false ) ;
@@ -71,8 +72,6 @@ demo_n.prototype.add = function( _json )
    var _skip_debug = _json.action == "start" || _json.action == "end" ? 1 : 0 ;
    if ( this.dev_mode && _mask != 15 && !_skip_debug )
    {
-      console.log( "FAILED ADD #"+this.action_frames.length, "CTRL ID", _json.ctrl_id );
-      console.log( "FAILED ADD #"+this.action_frames.length, "MASK", _mask, "INSTEAD OF", 15 );
       if ( ( _mask & 1 ) == 0 ) console.log( "FAILED ADD #"+this.action_frames.length, "MISSING CTRL ID" );
       if ( ( _mask & 2 ) == 0 ) console.log( "FAILED ADD #"+this.action_frames.length, "MISSING TIME SIZE" );
       if ( ( _mask & 4 ) == 0 ) console.log( "FAILED ADD #"+this.action_frames.length, "MISSING TIME UNIT" );
@@ -185,6 +184,7 @@ demo_n.prototype.do_it = function( _i )
      else if ( $( "#" + _entry.ctrl_id ).is( "td" ) ) _type = "td" ;
      else if ( $( "#" + _entry.ctrl_id ).is( "th" ) ) _type = "th" ;
      else if ( $( "#" + _entry.ctrl_id ).is( "img" ) ) _type = "img" ;
+     else if ( $( "#" + _entry.ctrl_id ).is( "span" ) ) _type = "span" ;
      else _type = $( "#" + _entry.ctrl_id ).prop('type').toLowerCase() ;
    }
 
@@ -237,6 +237,7 @@ demo_n.prototype.do_it = function( _i )
                 
        if ( _entry.desclabel.length > 0 )
        {
+         _entry.desclabel = _entry.desclabel.replace( /\r/g, "" ).replace( /\n/g, "<br/>" ) ;
          $( "#demon_desc_div" ).html( _entry.desclabel );
          $( "#demon_desc_div" ).show();
          var _cand_left = _offset.left ;
