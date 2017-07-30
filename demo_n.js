@@ -72,10 +72,10 @@ demo_n.prototype.add = function( _json )
    var _skip_debug = _json.action == "start" || _json.action == "end" ? 1 : 0 ;
    if ( this.dev_mode && _mask != 15 && !_skip_debug )
    {
-      if ( ( _mask & 1 ) == 0 ) console.log( "FAILED ADD #"+this.action_frames.length, "MISSING CTRL ID" );
-      if ( ( _mask & 2 ) == 0 ) console.log( "FAILED ADD #"+this.action_frames.length, "MISSING TIME SIZE" );
-      if ( ( _mask & 4 ) == 0 ) console.log( "FAILED ADD #"+this.action_frames.length, "MISSING TIME UNIT" );
-      if ( ( _mask & 8 ) == 0 ) console.log( "FAILED ADD #"+this.action_frames.length, "MISSING OR INVALID ACTION" );
+      if ( ( _mask & 1 ) == 0 ) console.log( "#DEMO-N : FAILED ADD #"+this.action_frames.length, "MISSING CTRL ID" );
+      if ( ( _mask & 2 ) == 0 ) console.log( "#DEMO-N : FAILED ADD #"+this.action_frames.length, "MISSING TIME SIZE" );
+      if ( ( _mask & 4 ) == 0 ) console.log( "#DEMO-N : FAILED ADD #"+this.action_frames.length, "MISSING TIME UNIT" );
+      if ( ( _mask & 8 ) == 0 ) console.log( "#DEMO-N : FAILED ADD #"+this.action_frames.length, "MISSING OR INVALID ACTION" );
    }
 
    if ( _mask & 1 )
@@ -196,6 +196,7 @@ demo_n.prototype.do_it = function( _i )
        var _width = $( "#" + _entry.ctrl_id ).width(), _height = $( "#" + _entry.ctrl_id ).height() ;
        var _ext_left_w = 0, _ext_left_h = 0, _ext_right_w = 0, _ext_right_h = 0 ;
        var _desc_shift_x = 0, _desc_shift_y = 0 ;
+       console.log( _entry.ctrl_id, _type, _offset );
        switch( _type )
        {
          case "button":
@@ -238,6 +239,7 @@ demo_n.prototype.do_it = function( _i )
        if ( _entry.desclabel.length > 0 )
        {
          _entry.desclabel = _entry.desclabel.replace( /\r/g, "" ).replace( /\n/g, "<br/>" ) ;
+         $( "#demon_desc_div" ).zIndex( Math.pow( 2, 31 ) );
          $( "#demon_desc_div" ).html( _entry.desclabel );
          $( "#demon_desc_div" ).show();
          var _cand_left = _offset.left ;
@@ -294,10 +296,12 @@ demo_n.prototype.do_it = function( _i )
        case "fadein":
        if ( _entry.set_value != null )
        $( "#" + _entry.ctrl_id ).fadeIn( _entry.set_value ) ;
+       else console.log( "#DEMO-N : required set_value attribute to let 'fadein' run" );
        break ;
        case "fadeout":
        if ( _entry.set_value != null )
        $( "#" + _entry.ctrl_id ).fadeOut( _entry.set_value, function(){ $( "#" + _entry.ctrl_id ).hide() ; } ) ;
+       else console.log( "#DEMO-N : required set_value attribute to let 'fadeout' run" );
        break ;
        case "hide":
        $( "#" + _entry.ctrl_id ).hide() ;
@@ -388,9 +392,9 @@ demo_n.prototype.do_it = function( _i )
    if ( typeof _entry.post_fn === "function" && _family_match ) _entry.post_fn.apply();
    if ( _i < _frames_n )
    {
-      if ( _family_match ) this.dev_div_show( _i );
-      _entry = _frames[_i] ;
-      if ( !this.stop_flag && _family_match ) this.timeoutid = setTimeout( function() { _demon.do_it( ++_i ) ; }, this.return_millisecs( _entry.time, _entry.time_unit ) );
-      else _demon.do_it( ++_i ) ;
+     if ( _family_match ) this.dev_div_show( _i );
+     _entry = _frames[_i] ;
+     if ( !this.stop_flag && _family_match ) this.timeoutid = setTimeout( function() { _demon.do_it( ++_i ) ; }, this.return_millisecs( _entry.time, _entry.time_unit ) );
+     else _demon.do_it( ++_i ) ;
    }
 }
