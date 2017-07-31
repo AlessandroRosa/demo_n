@@ -196,7 +196,7 @@ demo_n.prototype.do_it = function( _i )
        var _width = $( "#" + _entry.ctrl_id ).width(), _height = $( "#" + _entry.ctrl_id ).height() ;
        var _ext_left_w = 0, _ext_left_h = 0, _ext_right_w = 0, _ext_right_h = 0 ;
        var _desc_shift_x = 0, _desc_shift_y = 0 ;
-       console.log( _entry.ctrl_id, _type, _offset );
+       //console.log( _entry.ctrl_id, _type, _offset );
        switch( _type )
        {
          case "button":
@@ -295,13 +295,17 @@ demo_n.prototype.do_it = function( _i )
        break ;
        case "fadein":
        if ( _entry.set_value != null )
-       $( "#" + _entry.ctrl_id ).fadeIn( _entry.set_value ) ;
-       else console.log( "#DEMO-N : required set_value attribute to let 'fadein' run" );
+       {
+         this.change_position( _entry, 0 );
+         var _speed = _entry.set_value.speed ? _entry.set_value.speed : _entry.set_value ;
+         $( "#" + _entry.ctrl_id ).fadeIn( _speed ) ;
+       }
+       else console.log( "#DEMO-N : required set_value attribute to let 'fadein' action run" );
        break ;
        case "fadeout":
        if ( _entry.set_value != null )
        $( "#" + _entry.ctrl_id ).fadeOut( _entry.set_value, function(){ $( "#" + _entry.ctrl_id ).hide() ; } ) ;
-       else console.log( "#DEMO-N : required set_value attribute to let 'fadeout' run" );
+       else console.log( "#DEMO-N : required set_value attribute to let 'fadeout' action run" );
        break ;
        case "hide":
        $( "#" + _entry.ctrl_id ).hide() ;
@@ -320,40 +324,7 @@ demo_n.prototype.do_it = function( _i )
        $( "#" + _entry.ctrl_id ).val( $( "#" + _entry.ctrl_id ).val().slice(0,-1) ) ;
        break ;
        case "move":
-       if ( _entry.set_value != null && $( "#" + _entry.ctrl_id ).is( "div" ) )
-       {
-          if ( _entry.set_value.to_x != null && _entry.set_value.to_y != null )
-          {
-            var _to_x = is_string( _entry.set_value.to_x ) ? safe_string( _entry.set_value.to_x, "" ) : safe_int( _entry.set_value.to_x, -1 ) ;
-            var _to_y = is_string( _entry.set_value.to_y ) ? safe_string( _entry.set_value.to_y, "" ) : safe_int( _entry.set_value.to_y, -1 ) ;
-            switch( _to_x )
-            {
-               case "center": _to_x = ( $(window).width() - $( "#"+_entry.ctrl_id ).width() ) / 2 ; break ;
-               case "left": _to_x = 0 ; break ;
-               case "right": _to_x = $(window).width() - $( "#"+_entry.ctrl_id ).width() ; break ;
-               default: break ;
-            }
-
-            switch( _to_y )
-            {
-              case "center": _to_y = ( $(window).height() - $( "#"+_entry.ctrl_id ).height() ) / 2 ; break ;
-              case "top": _to_y = 0 ; break ;
-              case "bottom": _to_y = $(window).height() - $( "#"+_entry.ctrl_id ).height() ; break ;
-              default: break ;
-            }
-
-            $( "#" + _entry.ctrl_id ).animate({ 'left' : _to_x, 'top' : _to_y });
-          }
-          else if ( _entry.set_value.pos != null )
-          {
-            _entry.set_value.pos += "" ;
-            switch( _entry.set_value.pos )
-            {
-              case "left":
-              break
-            }
-          }
-       }
+       this.change_position( _entry, 1 );
        break ;
        case "scroll":
        if ( _entry.set_value != null && $( "#" + _entry.ctrl_id ).is( "div" ) )
@@ -376,6 +347,8 @@ demo_n.prototype.do_it = function( _i )
        $( "#" + _entry.ctrl_id ).trigger( "change" ) ;
        break ;
        case "show":
+       console.log( "IN" );
+       this.change_position( _entry, 0 );
        $( "#" + _entry.ctrl_id ).show() ;
        break ;
        case "toggle":
@@ -397,4 +370,37 @@ demo_n.prototype.do_it = function( _i )
      if ( !this.stop_flag && _family_match ) this.timeoutid = setTimeout( function() { _demon.do_it( ++_i ) ; }, this.return_millisecs( _entry.time, _entry.time_unit ) );
      else _demon.do_it( ++_i ) ;
    }
+}
+
+demo_n.prototype.change_position = function( _entry, _b_animate )
+{
+    if ( _entry == null ) return -1 ;
+    else if ( _entry.set_value != null && $( "#" + _entry.ctrl_id ).is( "div" ) )
+    {
+      if ( _entry.set_value.to_x != null && _entry.set_value.to_y != null )
+      {
+         var _to_x = is_string( _entry.set_value.to_x ) ? safe_string( _entry.set_value.to_x, "" ) : safe_int( _entry.set_value.to_x, -1 ) ;
+         var _to_y = is_string( _entry.set_value.to_y ) ? safe_string( _entry.set_value.to_y, "" ) : safe_int( _entry.set_value.to_y, -1 ) ;
+         switch( _to_x )
+         {
+           case "center": _to_x = ( $(window).width() - $( "#"+_entry.ctrl_id ).width() ) / 2 ; break ;
+           case "left": _to_x = 0 ; break ;
+           case "right": _to_x = $(window).width() - $( "#"+_entry.ctrl_id ).width() ; break ;
+           default: break ;
+         }
+
+         switch( _to_y )
+         {
+           case "center": _to_y = ( $(window).height() - $( "#"+_entry.ctrl_id ).height() ) / 2 ; break ;
+           case "top": _to_y = 0 ; break ;
+           case "bottom": _to_y = $(window).height() - $( "#"+_entry.ctrl_id ).height() ; break ;
+           default: break ;
+         }
+
+         if ( _b_animate ) $( "#" + _entry.ctrl_id ).animate({ 'left' : _to_x, 'top' : _to_y });
+         else $( "#" + _entry.ctrl_id ).css({ 'left' : _to_x, 'top' : _to_y });
+         return 1 ;
+      }
+      else return -2 ;
+    }
 }
