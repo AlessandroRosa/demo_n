@@ -239,7 +239,7 @@ demo_n.prototype.do_it = function( _i )
        if ( _entry.desclabel.length > 0 )
        {
          _entry.desclabel = _entry.desclabel.replace( /\r/g, "" ).replace( /\n/g, "<br/>" ) ;
-         $( "#demon_desc_div" ).zIndex( Math.pow( 2, 31 ) );
+         $( "#demon_desc_div" ).css( "z-index", Math.pow( 2, 31 ) );
          $( "#demon_desc_div" ).html( _entry.desclabel );
          $( "#demon_desc_div" ).show();
          var _cand_left = _offset.left ;
