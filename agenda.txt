@@ -1,0 +1,1 @@
+- Give the chance to set hybrid position settings, such as to_x : 100, to_y : "bottom"
