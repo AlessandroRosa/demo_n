@@ -87,9 +87,9 @@ demo_n.prototype.add = function( _json )
    return this ; // it allows calls chain
 }
 
-demo_n.prototype.return_millisecs = function( _time_val, _time_measure )
+demo_n.prototype.return_millisecs = function( _time_val, _time_unit )
 {
-   switch( _time_measure )
+   switch( _time_unit )
    {
       case "m": // minutes
       _time_val *= 1000 * 60 ;
@@ -118,10 +118,24 @@ demo_n.prototype.dev_div_show = function( _step )
    }
 }
 
-demo_n.prototype.run = function( _family )
+demo_n.prototype.run = function( _family, _json_attr )
 {
    if ( !is_string( _family ) ) _family = this.curr_family ;
    else this.curr_family = _family ;
+
+   if ( _json_attr != null )
+   {
+     var _speed_mask = _json_attr.time != null ? 1 : 0 ;
+         _speed_mask |= _json_attr.time_unit != null ? 2 : 0 ;
+     if ( _speed == (1|2) ) // fix the same pair time / time_unit for all frames
+     {
+       for( var _a = 0 ; _a < this.action_frames.length ; _a++ )
+       {
+         this.action_frames[_a].time = _json_attr.time ;
+         this.action_frames[_a].time_unit = _json_attr.time_unit ;
+       }
+     }
+   }
 
    if ( this.action_frames.length == 0 ) return ;
    else if ( this.action_frames[ this.action_frames.length-1 ].action != "end" )
@@ -347,7 +361,6 @@ demo_n.prototype.do_it = function( _i )
        $( "#" + _entry.ctrl_id ).trigger( "change" ) ;
        break ;
        case "show":
-       console.log( "IN" );
        this.change_position( _entry, 0 );
        $( "#" + _entry.ctrl_id ).show() ;
        break ;
