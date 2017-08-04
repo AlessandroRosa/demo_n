@@ -91,12 +91,10 @@ var _demon = new demo_n(true);
                   action : "click", set_value : -1, showlabel : true, desclabel : "I selected the checkbox" } );
 
     _demon.add( { action : "end" } );
-    _demon.run( "family1" );
-    _demon.run( "family2" );
 </pre>
 <DIV STYLE="padding:6px;float:right;">
-<INPUT TYPE="button" ONCLICK="javascript:_demon.run('family1');" VALUE="Run Family 1 - The radios">
-<INPUT TYPE="button" ONCLICK="javascript:_demon.run('family2');" VALUE="Run Family 2 - The checkboxes">
+<INPUT TYPE="button" ONCLICK="javascript:_demon.run({family:'family1'});" VALUE="Run Family 1 - The radios">
+<INPUT TYPE="button" ONCLICK="javascript:_demon.run({family:'family2'});" VALUE="Run Family 2 - The checkboxes">
 </DIV>
 <DIV STYLE="padding:6px;float:left;clear:right;background-color:#FBFBFB;margin:2px;">
 We took up the code in example 1 again and we added the property 'family'.<br>

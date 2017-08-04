@@ -42,6 +42,10 @@ demo_n.prototype.stop = function()
     clearTimeout( this.timeoutid );
     this.stop_flag = 1 ;
     $( "#demon_mark_div" ).html( "<SPAN STYLE=\"cursor:pointer;\" ONCLICK=\"javascript:_demon.resume();\">Resume demo</SPAN>" );
+
+    $( "#demon_div" ).hide();
+    $( "#demon_desc_div" ).hide();
+    $( "#demon_cover_div" ).hide();
   }
 }
 
@@ -52,6 +56,10 @@ demo_n.prototype.resume = function()
   {
     this.do_it( this.curr_frame_idx+1 );
     $( "#demon_mark_div" ).html( "Demo&nbsp;<SPAN STYLE=\"cursor:pointer;\" ONCLICK=\"javascript:_demon.stop();\">Stop</SPAN>" );
+
+    $( "#demon_div" ).show();
+    $( "#demon_desc_div" ).show();
+    $( "#demon_cover_div" ).show();
   }
 }
 
@@ -118,16 +126,20 @@ demo_n.prototype.dev_div_show = function( _step )
    }
 }
 
-demo_n.prototype.run = function( _family, _json_attr )
+demo_n.prototype.run = function( _json_attr )
 {
-   if ( !is_string( _family ) ) _family = this.curr_family ;
-   else this.curr_family = _family ;
+   if ( this.action_frames.length == 0 ) return ;
+   else if ( this.action_frames[ this.action_frames.length-1 ].action != "end" )
+   this.add( { ctrl_id : "", time : this.action_frames[ this.action_frames.length-1 ].time, time_unit : this.action_frames[ this.action_frames.length-1 ].time_unit,
+               action : "end", set_value : -1 } );
 
+   var _family = "" ;
    if ( _json_attr != null )
    {
+     if ( _json_attr.family != null ) this.curr_family = _json_attr.family ;
      var _speed_mask = _json_attr.time != null ? 1 : 0 ;
          _speed_mask |= _json_attr.time_unit != null ? 2 : 0 ;
-     if ( _speed == (1|2) ) // fix the same pair time / time_unit for all frames
+     if ( _speed_mask == (1|2) ) // fix the same pair time / time_unit for all frames
      {
        for( var _a = 0 ; _a < this.action_frames.length ; _a++ )
        {
@@ -136,11 +148,6 @@ demo_n.prototype.run = function( _family, _json_attr )
        }
      }
    }
-
-   if ( this.action_frames.length == 0 ) return ;
-   else if ( this.action_frames[ this.action_frames.length-1 ].action != "end" )
-   this.add( { ctrl_id : "", time : this.action_frames[ this.action_frames.length-1 ].time, time_unit : this.action_frames[ this.action_frames.length-1 ].time_unit,
-               action : "end", set_value : -1 } );
 
    var _frames = this.action_frames ;
    var _frames_n = _frames.length ;
