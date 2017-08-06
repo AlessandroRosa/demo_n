@@ -29,11 +29,11 @@ b.dev_div { color:#454545 ; }
   align-items: flex-end;
   
   opacity:1;
-  width:100%;
-  height:100%;
+  width:auto;
+  height:auto;
   left:0px;
   top:0px;
-  color:black;
+  color:#343434;
   z-index:3001;
   
   font-size:14pt;

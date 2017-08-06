@@ -42,11 +42,12 @@ demo_n.prototype.stop = function()
     clearTimeout( this.timeoutid );
     this.stop_flag = 1 ;
     $( "#demon_mark_div" ).html( "<SPAN STYLE=\"cursor:pointer;\" ONCLICK=\"javascript:_demon.resume();\">Resume demo</SPAN>" );
-
-    $( "#demon_div" ).hide();
-    $( "#demon_desc_div" ).hide();
-    $( "#demon_cover_div" ).hide();
   }
+
+  $( "#demon_div" ).hide();
+  $( "#demon_desc_div" ).hide();
+  $( "#demon_cover_div" ).hide();
+  $( "#demon_dev_div" ).hide();
 }
 
 demo_n.prototype.resume = function()
@@ -60,6 +61,7 @@ demo_n.prototype.resume = function()
     $( "#demon_div" ).show();
     $( "#demon_desc_div" ).show();
     $( "#demon_cover_div" ).show();
+    $( "#demon_dev_div" ).show();
   }
 }
 
@@ -171,7 +173,9 @@ demo_n.prototype.run = function( _json_attr )
      this.demon_div_coords = { wnd_w : $(window).width(), wnd_h : window.innerHeight, dev_w : 270, dev_h : 52 } ;
      $( "#demon_dev_div" ).width( this.demon_div_coords.dev_w );
      $( "#demon_dev_div" ).height( this.demon_div_coords.dev_h );
+     $( "#demon_mark_div" ).width( 220 );
      $( "#demon_mark_div" ).css( "left", $(window).width() - $( "#demon_mark_div" ).width() - 4 );
+     $( "#demon_mark_div" ).css( "top", ( this.demon_div_coords.wnd_h - 30 )+"px" );
      $( "#demon_dev_div" ).css( "top", ( this.demon_div_coords.wnd_h - this.demon_div_coords.dev_h - 22 )+"px" );
    }
 
