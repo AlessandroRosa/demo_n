@@ -12,7 +12,7 @@ function demo_n( _dev_mode )
    this.dev_mode = _dev_mode === true ? 1 : safe_int( _dev_mode, 0 ) ;
    this.curr_family = "" ;
    this.action_frames = [] ;
-   this.actions_dict = [ "blur", "change", "clean", "click", "dblclick",
+   this.actions_dict = [ "blur", "change", "check", "clean", "click", "dblclick",
                          "end", // demo end
                          "focus", "hide", "keydel", "keypress",
                          "fadein", "fadeout",
@@ -202,8 +202,6 @@ demo_n.prototype.do_it = function( _i )
    if ( typeof _entry.pre_fn === "function" && _family_match ) _entry.pre_fn.apply();
    $( "#demon_mark_div" ).html( _i+" of "+_frames_n+" - Demo&nbsp;<SPAN STYLE=\"cursor:pointer;\" ONCLICK=\"javascript:_demon.stop();\">Stop</SPAN>" );
 
-   if ( this.dev_mode ) console.log( "Developer mode", "CTRL ID", _entry.ctrl_id, "CTRL EXISTS", _ctrl_exists );
-
    var _type = "" ;
    if ( _ctrl_exists )
    {
@@ -215,6 +213,13 @@ demo_n.prototype.do_it = function( _i )
      else _type = $( "#" + _entry.ctrl_id ).prop('type').toLowerCase() ;
    }
 
+   if ( this.dev_mode )
+   {
+     console.log( "Developer mode" );
+     console.log( "CTRL ID", _entry.ctrl_id, "CTRL EXISTS", _ctrl_exists );
+     console.log( "MATCH", _family_match, " | ACTION", _entry.action );
+   }
+
    if ( _entry.showlabel && _family_match ) // showlabel
    {
      if ( _ctrl_exists )
@@ -223,7 +228,6 @@ demo_n.prototype.do_it = function( _i )
        var _width = $( "#" + _entry.ctrl_id ).width(), _height = $( "#" + _entry.ctrl_id ).height() ;
        var _ext_left_w = 0, _ext_left_h = 0, _ext_right_w = 0, _ext_right_h = 0 ;
        var _desc_shift_x = 0, _desc_shift_y = 0 ;
-       //console.log( _entry.ctrl_id, _type, _offset );
        switch( _type )
        {
          case "button":
@@ -291,6 +295,8 @@ demo_n.prototype.do_it = function( _i )
          else $( "#" + _entry.ctrl_id ).val( "" ) ;
        }
        break ;
+       case "check":
+       if ( _type == "checkbox" ) _entry.action = "click" ;
        case "blur":
        case "change":
        case "click":
