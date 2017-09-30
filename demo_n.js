@@ -202,6 +202,8 @@ demo_n.prototype.do_it = function( _i )
    if ( typeof _entry.pre_fn === "function" && _family_match ) _entry.pre_fn.apply();
    $( "#demon_mark_div" ).html( _i+" of "+_frames_n+" - Demo&nbsp;<SPAN STYLE=\"cursor:pointer;\" ONCLICK=\"javascript:_demon.stop();\">Stop</SPAN>" );
 
+   if ( this.dev_mode ) console.log( "Developer mode", "CTRL ID", _entry.ctrl_id, "CTRL EXISTS", _ctrl_exists );
+
    var _type = "" ;
    if ( _ctrl_exists )
    {
